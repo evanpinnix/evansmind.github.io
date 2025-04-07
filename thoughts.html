@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thoughts | Evan's Mind</title>
+    <style>
+        /* Modern Industrial Typography */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap');
+        
+        /* Base Styles */
+        :root {
+            --text-color: #000;
+            --bg-color: #fff;
+            --accent-color: #333;
+            --light-gray: #f2f2f2;
+            --med-gray: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        header {
+            padding: 40px 0 20px;
+            border-bottom: 1px solid var(--med-gray);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--text-color);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .nav-links a.active:after {
+            width: 100%;
+        }
+        
+        /* Page Header */
+        .page-header {
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+        
+        .page-header p {
+            max-width: 600px;
+            margin: 0 auto;
+            color: #333;
+        }
+        
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--med-gray);
+            margin-bottom: 40px;
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .filter-button {
+            background: none;
+            border: none;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        .filter-button:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--text-color);
+            transition: width 0.3s;
+        }
+        
+        .filter-button:hover:after,
+        .filter-button.active:after {
+            width: 100%;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--med-gray);
+        }
+        
+        .search-bar input {
+            border: none;
+            background: none;
+            padding: 8px 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        
+        .search-icon {
+            padding: 0 10px;
+        }
+        
+        /* Thoughts List */
+        .thoughts-list {
+            display: grid;
+            gap: 40px;
+        }
+        
+        .thought-entry {
+            border-bottom: 1px solid var(--med-gray);
+            padding-bottom: 40px;
+        }
+        
+        .thought-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .thought-date {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .thought-category {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .thought-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        .thought-content {
+            margin-bottom: 25px;
+        }
+        
+        .read-full {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .read-full:after {
+            content: "→";
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .read-full:hover:after {
+            transform: translateX(5px);
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 60px 0;
+            gap: 10px;
+        }
+        
+        .page-button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--med-gray);
+            background: none;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            transition: all 0.3s;
+        }
+        
+        .page-button:hover,
+        .page-button.active {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            border-color: var(--text-color);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 50px 0;
+            margin-top: 100px;
+            border-top: 1px solid var(--med-gray);
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Full Thought Modal (for future use) */
+        .thought-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255,255,255,0.95);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: var(--bg-color);
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+            
+            .thought-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">EVAN'S MIND</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="thoughts.html" class="active">Thoughts</a>
+                <a href="index.html#about">About</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="page-header">
+            <h1>Thoughts</h1>
+            <p>A chronological record of my philosophical explorations and intellectual evolution.</p>
+        </section>
+        
+        <section class="filter-bar">
+            <div class="filter-options">
+                <button class="filter-button active">All</button>
+                <button class="filter-button">Metaphysics</button>
+                <button class="filter-button">Ethics</button>
+                <button class="filter-button">Epistemology</button>
+                <button class="filter-button">Consciousness</button>
+            </div>
+            
+            <div class="search-bar">
+                <div class="search-icon">⌕</div>
+                <input type="text" placeholder="Search thoughts...">
+            </div>
+        </section>
+        
+        <section class="thoughts-list">
+            <article class="thought-entry">
+                <div class="thought-meta">
+                    <div class="thought-date">APRIL 7, 2025</div>
+                    <div class="thought-category">Metaphysics, Psychology</div>
+                </div>
+                <h2 class="thought-title">The Paradox of Choice in Modern Life</h2>
+                <div class="thought-content">
+                    <p>As our options multiply exponentially in the digital age, does our capacity for satisfaction diminish proportionally? This question has occupied my thinking throughout the past week, as I've observed the curious phenomenon that seems to plague modern decision-making.</p>
+                    <p>At the core of this paradox lies a fundamental tension: we crave freedom of choice, yet an abundance of options often leads to decision paralysis, regret, and diminished satisfaction with our eventual selection...</p>
+                </div>
+                <a href="#" class="read-full">Read full thought</a>
+            </article>
+            
+            <article class="thought-entry">
+                <div class="thought-meta">
+                    <div class="thought-date">MARCH 28, 2025</div>
+                    <div class="thought-category">Consciousness, Technology</div>
+                </div>
+                <h2 class="thought-title">On Digital Consciousness</h2>
+                <div class="thought-content">
+                    <p>The question of whether consciousness could emerge from digital systems has fascinated philosophers and computer scientists alike for decades. As computational power increases and AI systems grow increasingly sophisticated, this once theoretical question takes on new urgency.</p>
+                    <p>What exactly constitutes consciousness? Is it merely a specific arrangement of information processing, or does it require some biological substrate? If we create systems of sufficient complexity, might consciousness emerge as an emergent property?...</p>
+                </div>
+                <a href="#" class="read-full">Read full thought</a>
+            </article>
+            
+            <article class="thought-entry">
+                <div class="thought-meta">
+                    <div class="thought-date">MARCH 15, 2025</div>
+                    <div class="thought-category">Metaphysics, Perception</div>
+                </div>
+                <h2 class="thought-title">Time as a Construct</h2>
+                <div class="thought-content">
+                    <p>Our perception of time as linear and unidirectional shapes every aspect of human experience, yet this perception may be as much a product of our cognitive architecture as it is a fundamental property of reality.</p>
+                    <p>Physics suggests that past, present, and future may coexist in what Einstein called a "block universe." Meanwhile, various cultural traditions conceptualize time in cyclical rather than linear terms. This raises the question: is our understanding of time a biological necessity, a cultural invention, or some intricate combination of both?...</p>
+                </div>
+                <a href="#" class="read-full">Read full thought</a>
+            </article>
+            
+            <article class="thought-entry">
+                <div class="thought-meta">
+                    <div class="thought-date">FEBRUARY 27, 2025</div>
+                    <div class="thought-category">Ethics, Society</div>
+                </div>
+                <h2 class="thought-title">The Evolution of Moral Systems</h2>
+                <div class="thought-content">
+                    <p>Moral frameworks evolve alongside the societies they govern, adapting to new technologies, social structures, and environmental conditions. What might this evolutionary perspective tell us about the nature of ethics itself?</p>
+                    <p>If we trace the development of moral systems throughout human history, we observe a general expansion of moral concern—from immediate kin, to the tribe, to the nation, and increasingly to all of humanity and even non-human animals...</p>
+                </div>
+                <a href="#" class="read-full">Read full thought</a>
+            </article>
+            
+            <article class="thought-entry">
+                <div class="thought-meta">
+                    <div class="thought-date">FEBRUARY 10, 2025</div>
+                    <div class="thought-category">Epistemology, Science</div>
+                </div>
+                <h2 class="thought-title">The Limits of Knowledge</h2>
+                <div class="thought-content">
+                    <p>As our scientific understanding deepens, we simultaneously uncover more questions than answers. Each discovery seems to reveal new layers of complexity, suggesting that complete knowledge may remain perpetually beyond our grasp.</p>
+                    <p>This observation leads me to consider whether there might be fundamental limits to human knowledge—not merely practical constraints arising from our finite lifespans and limited cognitive resources, but inherent boundaries imposed by the structure of reality itself and our position within it...</p>
+                </div>
+                <a href="#" class="read-full">Read full thought</a>
+            </article>
+        </section>
+        
+        <div class="pagination">
+            <button class="page-button active">1</button>
+            <button class="page-button">2</button>
+            <button class="page-button">3</button>
+            <button class="page-button">→</button>
+        </div>
+    </main>
+    
+    <footer>
+        <p class="footer-text">© 2025 EVAN'S MIND. ALL THOUGHTS RESERVED.</p>
+    </footer>
+    
+    <!-- Modal for displaying full thoughts -->
+    <div class="thought-modal" id="thoughtModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">×</button>
+            <div class="modal-meta">
+                <div class="thought-date" id="modalDate"></div>
+                <div class="thought-category" id="modalCategory"></div>
+            </div>
+            <h2 class="thought-title" id="modalTitle"></h2>
+            <div class="thought-content" id="modalContent"></div>
+        </div>
+    </div>
+    
+    <!-- JavaScript for full interactivity -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // ===== FILTER FUNCTIONALITY =====
+            const filterButtons = document.querySelectorAll('.filter-button');
+            const thoughtEntries = document.querySelectorAll('.thought-entry');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    const filter = button.textContent.toLowerCase();
+                    
+                    // Filter the thoughts
+                    thoughtEntries.forEach(entry => {
+                        const category = entry.querySelector('.thought-category').textContent.toLowerCase();
+                        
+                        if (filter === 'all') {
+                            entry.style.display = 'block';
+                        } else if (category.includes(filter.toLowerCase())) {
+                            entry.style.display = 'block';
+                        } else {
+                            entry.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // ===== SEARCH FUNCTIONALITY =====
+            const searchInput = document.querySelector('.search-bar input');
+            
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                
+                thoughtEntries.forEach(entry => {
+                    const title = entry.querySelector('.thought-title').textContent.toLowerCase();
+                    const content = entry.querySelector('.thought-content').textContent.toLowerCase();
+                    const category = entry.querySelector('.thought-category').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || 
+                        content.includes(searchTerm) || 
+                        category.includes(searchTerm)) {
+                        entry.style.display = 'block';
+                    } else {
+                        entry.style.display = 'none';
+                    }
+                });
+            });
+            
+            // ===== PAGINATION FUNCTIONALITY =====
+            const pageButtons = document.querySelectorAll('.page-button');
+            
+            pageButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    pageButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    // In a real implementation with multiple pages of content,
+                    // this would load the appropriate page of thoughts
+                    if (button.textContent === '→') {
+                        alert('Loading next page...');
+                    } else {
+                        alert('Loading page ' + button.textContent);
+                    }
+                });
+            });
+            
+            // ===== MODAL FUNCTIONALITY =====
+            const readFullLinks = document.querySelectorAll('.read-full');
+            const modal = document.getElementById('thoughtModal');
+            const closeModal = document.getElementById('closeModal');
+            
+            // Open modal when "Read full thought" is clicked
+            readFullLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    const entry = link.closest('.thought-entry');
+                    const title = entry.querySelector('.thought-title').textContent;
+                    const date = entry.querySelector('.thought-date').textContent;
+                    const category = entry.querySelector('.thought-category').textContent;
+                    let content = entry.querySelector('.thought-content').innerHTML;
+                    
+                    // Extend the content for the full article
+                    content += '<p>This is the full version of the thought, which would normally contain much more content than the preview shown on the main page. When you add real content, this would be replaced with your complete philosophical reflections on the topic.</p>';
+                    content += '<p>You could include multiple paragraphs exploring the nuances of your ideas, references to other thinkers, personal anecdotes that led to these insights, and any conclusions you've reached.</p>';
+                    content += '<p>The modal format allows readers to focus entirely on one thought at a time without distraction, creating an immersive reading experience that encourages deep engagement with your ideas.</p>';
+                    
+                    // Update modal content
+                    document.getElementById('modalTitle').textContent = title;
+                    document.getElementById('modalDate').textContent = date;
+                    document.getElementById('modalCategory').textContent = category;
+                    document.getElementById('modalContent').innerHTML = content;
+                    
+                    // Show modal
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+                });
+            });
+            
+            // Close modal when X is clicked
+            closeModal.addEventListener('click', () => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+            });
+            
+            // Close modal when clicking outside the content
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Close modal when pressing ESC key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.style.display === 'block') {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

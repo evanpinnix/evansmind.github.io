@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evan's Mind</title>
+    <style>
+        /* Modern Industrial Typography */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap');
+        
+        /* Base Styles */
+        :root {
+            --text-color: #000;
+            --bg-color: #fff;
+            --accent-color: #333;
+            --light-gray: #f2f2f2;
+            --med-gray: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        header {
+            padding: 40px 0 20px;
+            border-bottom: 1px solid var(--med-gray);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--text-color);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: 4rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            color: #333;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            font-family: 'Space Mono', monospace;
+            padding: 12px 24px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        /* Latest Thoughts Section */
+        .latest-thoughts {
+            padding: 50px 0;
+        }
+        
+        .section-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40%;
+            height: 2px;
+            background-color: var(--text-color);
+        }
+        
+        .thought-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .thought-card {
+            border: 1px solid var(--med-gray);
+            padding: 30px;
+            transition: all 0.3s;
+        }
+        
+        .thought-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .thought-date {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .thought-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        
+        .thought-excerpt {
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+        
+        .read-more {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .read-more:after {
+            content: "→";
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .read-more:hover:after {
+            transform: translateX(5px);
+        }
+        
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-text h2 {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        
+        .about-image {
+            background-color: var(--light-gray);
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 50px 0;
+            margin-top: 100px;
+            border-top: 1px solid var(--med-gray);
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .about {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                order: -1;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">EVAN'S MIND</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="thoughts.html">Thoughts</a>
+                <a href="#about">About</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h1>A Repository of Philosophical Progress</h1>
+            <p>Welcome to my mind—a collection of thoughts, ideas, and philosophical explorations as they evolve over time.</p>
+            <a href="thoughts.html" class="cta-button">EXPLORE MY THOUGHTS</a>
+        </section>
+        
+        <section class="latest-thoughts">
+            <h2 class="section-title">Latest Thoughts</h2>
+            <div class="thought-grid">
+                <div class="thought-card">
+                    <div class="thought-date">APRIL 7, 2025</div>
+                    <h3 class="thought-title">The Paradox of Choice in Modern Life</h3>
+                    <p class="thought-excerpt">As our options multiply, does our capacity for satisfaction diminish? Exploring the relationship between abundance and fulfillment.</p>
+                    <a href="thoughts.html" class="read-more">Read more</a>
+                </div>
+                
+                <div class="thought-card">
+                    <div class="thought-date">MARCH 28, 2025</div>
+                    <h3 class="thought-title">On Digital Consciousness</h3>
+                    <p class="thought-excerpt">Examining the possibility of consciousness emerging from complex information processing systems.</p>
+                    <a href="thoughts.html" class="read-more">Read more</a>
+                </div>
+                
+                <div class="thought-card">
+                    <div class="thought-date">MARCH 15, 2025</div>
+                    <h3 class="thought-title">Time as a Construct</h3>
+                    <p class="thought-excerpt">Is our perception of linear time a biological necessity or a cultural invention? Perhaps both.</p>
+                    <a href="thoughts.html" class="read-more">Read more</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="about" class="about">
+            <div class="about-text">
+                <h2>About Evan's Mind</h2>
+                <p>This website serves as a repository of my philosophical journey—a digital record of how one mind progresses, evolves, and sometimes circles back over time.</p>
+                <p>My goal is to document my intellectual explorations with honesty and depth, creating a longitudinal study of philosophical development that might provide value to others on similar paths.</p>
+                <p>I believe in the power of transparent thinking and the value of sharing our mental processes, not just our conclusions.</p>
+            </div>
+            <div class="about-image">
+                [YOUR PHOTO HERE]
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p class="footer-text">© 2025 EVAN'S MIND. ALL THOUGHTS RESERVED.</p>
+    </footer>
+    
+    <!-- JavaScript for interactivity -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Make sure all navigation links work
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    // Already handled by href attribute, this is for any additional effects
+                    console.log('Navigating to:', link.getAttribute('href'));
+                });
+            });
+            
+            // Make the CTA button work
+            const ctaButton = document.querySelector('.cta-button');
+            ctaButton.addEventListener('click', (e) => {
+                // Already handled by href attribute, this is for any additional effects
+                console.log('Exploring thoughts...');
+            });
+            
+            // Make "Read more" links work
+            const readMoreLinks = document.querySelectorAll('.read-more');
+            readMoreLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    // Already handled by href attribute, this is for any additional effects
+                    console.log('Reading more about:', link.closest('.thought-card').querySelector('.thought-title').textContent);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
